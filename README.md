@@ -1,5 +1,10 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
+## About
+This project is an tutorial to learn how to create a [Next.js](https://nextjs.org/) project with [TypeScript](https://www.typescriptlang.org/), [ESLint](https://eslint.org/https://eslint.org/), [Prettier](https://prettier.io/), [Tailwind](https://tailwindcss.com/), [React](https://fr.legacy.reactjs.org/) and [Stripe](https://stripe.com/fr) for payment.
+
+The source of tutorial is [here](https://youtu.be/yXBXVaAPdJk) making by [Noor Mohammad](https://www.youtube.com/@reactjsBD/videos)
+
 ## Getting Started
 
 First, run the development server:
@@ -10,15 +15,9 @@ npm run dev
 yarn dev
 # or
 pnpm dev
-# or
-bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
 
 ## Learn More
 
