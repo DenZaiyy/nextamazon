@@ -2,15 +2,25 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import {ProductType} from "../../type";
+import {ProductType, StateProps} from "../../type";
 import {Heart} from "lucide-react";
 import FormattedPrice from "@/components/FormattedPrice";
+import {useDispatch, useSelector} from "react-redux";
+import {addToCart, addToFavorite} from "@/redux/proSlice";
+import toast, {Toaster} from "react-hot-toast";
 
 interface Item {
 	products: ProductType[]
 }
 
 const Product = ({products}: Item) => {
+	const {favoriteData} = useSelector((state: StateProps) => state.pro)
+
+	const isFavorite = (productId: any) => {
+		return favoriteData?.some((favoriteItem) => favoriteItem?._id === productId);
+	}
+
+	const dispatch = useDispatch();
 	return (
 		<div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 mt-10">
 			{Array.isArray(products) && products.length > 0 ? (
@@ -28,8 +38,16 @@ const Product = ({products}: Item) => {
 								className="w-full h-80 object-contain lg:object-cover group-hover:scale-105"/>
 						</Link>
 						<Heart
-							fill="black"
+							fill={isFavorite(item?._id) ? "red" : "black"}
 							className="absolute top-4 right-4 text-zinc-500 w-5 h-5 hover:text-black cursor-pointer duration-200"
+							onClick={() => {
+								dispatch(addToFavorite(item));
+								if (isFavorite(item?._id)) {
+									toast.error(`${item?.title} is removed from favorite!`);
+								} else {
+									toast.success(`${item?.title} is added to favorite!`);
+								}
+							}}
 						/>
 						<div className="p-4 bg-zinc-100 group-hover:bg-zinc-50 group-hover:shadow-xl duration-300">
 							<p className="group-hover:text-designColor duration-300">
@@ -39,7 +57,7 @@ const Product = ({products}: Item) => {
 								<FormattedPrice amount={item?.price}/>
 							</p>
 							<div className="flex items-center justify-between text-sm mt-2">
-								<button className="uppercase font-semibold hover:text-designColor duration-300">
+								<button onClick={() => {dispatch(addToCart(item)); toast.success(`${item?.title} is added to cart!`)}} className="uppercase font-semibold hover:text-designColor duration-300">
 									Add to cart
 								</button>
 								<Link className="uppercase font-semibold hover:text-designColor duration-300"
@@ -51,6 +69,14 @@ const Product = ({products}: Item) => {
 			) : (
 				<p>No products available</p>
 			)}
+			<Toaster
+				position="bottom-right"
+				toastOptions={{
+					style: {
+						background: "#333",
+						color: "#fff",
+					},
+				}} />
 		</div>
 	);
 };
